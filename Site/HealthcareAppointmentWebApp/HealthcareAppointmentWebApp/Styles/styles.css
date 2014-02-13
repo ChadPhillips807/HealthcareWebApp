@@ -1,0 +1,39 @@
+﻿body {
+    font-size:20px;
+}
+
+#table_container {
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#table_container table {
+    border-collapse:collapse;
+    width:800px;
+}
+
+#table_container th {
+    font-size:25px;
+    background-color:lightblue;
+}
+
+#table_container td {
+    padding:5px;
+}
+table, th, td{
+    border: 1px solid black;
+}
+
+caption {
+    font-size:25px;
+    
+}
+
+.patientcheckedin {
+    background-color:lightcyan;
+}
+
+.check_in_instruction_list li{
+    font-size:5px;    font-size:15px;
+}

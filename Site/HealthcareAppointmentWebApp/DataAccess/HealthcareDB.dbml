@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HealthcareDB" Class="HealthcareDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SLAVE_1\SQLEXPRESS;Initial Catalog=HealthcareDB;Integrated Security=True" SettingsObjectName="DataAccess.Properties.Settings" SettingsPropertyName="HealthcareDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Appointments" Member="Appointments">
+    <Type Name="Appointment">
+      <Column Name="AppointmentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Doctor_Appointment" Member="Doctor" ThisKey="DoctorId" OtherKey="DoctorId" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Patient_Appointment" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contacts" Member="Contacts">
+    <Type Name="Contact">
+      <Column Name="ContactId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Contact_Doctor" Member="Doctors" ThisKey="ContactId" OtherKey="ContactId" Type="Doctor" />
+      <Association Name="Contact_Patient" Member="Patients" ThisKey="ContactId" OtherKey="ContactId" Type="Patient" />
+      <Association Name="Contact_PhoneNumber" Member="PhoneNumbers" ThisKey="ContactId" OtherKey="ContactId" Type="PhoneNumber" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Doctors" Member="Doctors">
+    <Type Name="Doctor">
+      <Column Name="DoctorId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Doctor_Appointment" Member="Appointments" ThisKey="DoctorId" OtherKey="DoctorId" Type="Appointment" />
+      <Association Name="Contact_Doctor" Member="Contact" ThisKey="ContactId" OtherKey="ContactId" Type="Contact" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Patients" Member="Patients">
+    <Type Name="Patient">
+      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Patient_Appointment" Member="Appointments" ThisKey="PatientId" OtherKey="PatientId" Type="Appointment" />
+      <Association Name="Contact_Patient" Member="Contact" ThisKey="ContactId" OtherKey="ContactId" Type="Contact" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhoneNumbers" Member="PhoneNumbers">
+    <Type Name="PhoneNumber">
+      <Column Name="PhoneId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNum" Type="System.String" DbType="NVarChar(12) NOT NULL" CanBeNull="false" />
+      <Association Name="Contact_PhoneNumber" Member="Contact" ThisKey="ContactId" OtherKey="ContactId" Type="Contact" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>
